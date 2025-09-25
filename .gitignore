@@ -108,3 +108,17 @@ models/
 assets/
 textures/
 models/
+
+# Generated assets (will be created by AI services)
+public/assets/generated/
+public/audio/generated/
+
+# Docker volumes
+postgres_data/
+redis_data/
+
+# API Keys and Secrets (Extra protection)
+**/api-keys.json
+**/secrets.json
+**/credentials.json
+**/.env.production
