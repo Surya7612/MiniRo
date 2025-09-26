@@ -79,13 +79,13 @@ const ShareModal: React.FC<ShareModalProps> = ({ isOpen, onClose, onRemix }) => 
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          className="fixed inset-0 bg-black/50 flex items-center justify-center p-4 z-50"
+          className="modal-overlay"
         >
           <motion.div
             initial={{ scale: 0.9, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
             exit={{ scale: 0.9, opacity: 0 }}
-            className="glass p-6 max-w-2xl w-full max-h-[90vh] overflow-y-auto"
+            className="modal-surface max-h-[90vh] overflow-y-auto"
           >
             {/* Header */}
             <div className="flex items-center justify-between mb-6">
@@ -101,7 +101,7 @@ const ShareModal: React.FC<ShareModalProps> = ({ isOpen, onClose, onRemix }) => 
             </div>
 
             {/* Game Info */}
-            <div className="mb-6 p-4 bg-white/5 rounded-lg">
+            <div className="mb-6 rounded-2xl border border-slate-800/70 bg-slate-900/60 p-4">
               <h3 className="text-white font-medium text-lg mb-2">{currentGame.name}</h3>
               <p className="text-white/80 text-sm mb-3">{currentGame.description}</p>
               

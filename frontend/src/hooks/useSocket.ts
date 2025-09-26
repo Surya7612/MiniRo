@@ -5,7 +5,7 @@ import { useVoiceStore } from '../stores/voiceStore';
 import { AudioService } from '../services/audioService';
 import { SocketEvents, GameState, Player, GameEvent, VoiceInfo } from '../types';
 
-const SOCKET_URL = import.meta.env.VITE_SOCKET_URL || 'http://localhost:5000';
+const SOCKET_URL = import.meta.env.VITE_SOCKET_URL || 'http://localhost:5002';
 
 export const useSocket = () => {
   const socketRef = useRef<Socket | null>(null);
@@ -27,7 +27,13 @@ export const useSocket = () => {
   useEffect(() => {
     // Initialize socket connection
     socketRef.current = io(SOCKET_URL, {
-      transports: ['websocket', 'polling']
+      transports: ['websocket', 'polling'],
+      timeout: 20000,
+      forceNew: true,
+      reconnection: true,
+      reconnectionAttempts: 5,
+      reconnectionDelay: 1000,
+      autoConnect: true
     });
 
     // Initialize audio service
@@ -54,7 +60,7 @@ export const useSocket = () => {
 
     // Game events
     socket.on('game_created', (data: { game: GameState }) => {
-      console.log('Game created:', data.game);
+      console.log('🎮 Game created:', data.game.name, data.game.description);
       setCurrentGame(data.game);
     });
 
@@ -150,6 +156,12 @@ export const useSocket = () => {
   };
 
   const generateGame = (prompt: string, voiceStyle?: string) => {
+    console.log('🚀 Generating game with prompt:', prompt);
+    
+    // Clear current game state before generating new one
+    setCurrentGame(null);
+    setError(null);
+    
     emit('generate_game', { prompt, voiceStyle });
   };
 

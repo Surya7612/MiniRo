@@ -73,9 +73,9 @@ const GameLobby: React.FC<GameLobbyProps> = ({ onStartGame, onShowShare, onShowR
     <motion.div
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
-      className="absolute inset-0 flex items-center justify-center p-4"
+      className="min-h-screen flex items-center justify-center p-4 py-8"
     >
-      <div className="glass p-8 max-w-2xl w-full">
+      <div className="glass p-8 max-w-4xl w-full mx-auto mb-8">
         <div className="text-center mb-8">
           <motion.div
             initial={{ scale: 0 }}
@@ -252,17 +252,16 @@ const GameLobby: React.FC<GameLobbyProps> = ({ onStartGame, onShowShare, onShowR
               </motion.button>
             )}
             
-            {isHost && currentGame.players.length > 0 && (
-              <motion.button
-                onClick={onStartGame}
-                className="btn btn-primary flex-1 flex items-center justify-center gap-2"
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
-              >
-                <Play className="w-4 h-4" />
-                Start Game
-              </motion.button>
-            )}
+            {/* Always show Start Game button for single player */}
+            <motion.button
+              onClick={onStartGame}
+              className="btn btn-primary flex-1 flex items-center justify-center gap-2"
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
+            >
+              <Play className="w-4 h-4" />
+              Start Game
+            </motion.button>
           </div>
 
           {/* Share and Remix Buttons */}

@@ -86,13 +86,13 @@ const RemixModal: React.FC<RemixModalProps> = ({ isOpen, onClose, originalGame }
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          className="fixed inset-0 bg-black/50 flex items-center justify-center p-4 z-50"
+          className="modal-overlay"
         >
           <motion.div
             initial={{ scale: 0.9, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
             exit={{ scale: 0.9, opacity: 0 }}
-            className="glass p-6 max-w-2xl w-full max-h-[90vh] overflow-y-auto"
+            className="modal-surface max-h-[90vh] overflow-y-auto"
           >
             {/* Header */}
             <div className="flex items-center justify-between mb-6">
@@ -112,10 +112,10 @@ const RemixModal: React.FC<RemixModalProps> = ({ isOpen, onClose, originalGame }
 
             <form onSubmit={handleSubmit} className="space-y-6">
               {/* Original Game Info */}
-              <div className="p-4 bg-white/5 rounded-lg">
-                <h3 className="text-white font-medium mb-2">Original Game</h3>
-                <p className="text-white/80 text-sm mb-2">{originalGame?.name}</p>
-                <p className="text-white/60 text-xs">{originalGame?.description}</p>
+              <div className="rounded-2xl border border-slate-800/70 bg-slate-900/60 p-4">
+                <h3 className="text-sm font-semibold text-white mb-2">Original game</h3>
+                <p className="text-base font-semibold text-white mb-1">{originalGame?.name}</p>
+                <p className="text-sm text-white/60">{originalGame?.description}</p>
               </div>
 
               {/* Prompt Modification */}
@@ -170,16 +170,16 @@ const RemixModal: React.FC<RemixModalProps> = ({ isOpen, onClose, originalGame }
                   <Settings className="w-4 h-4 inline mr-1" />
                   Game Mechanics (Select multiple)
                 </label>
-                <div className="grid grid-cols-2 md:grid-cols-3 gap-2">
+                <div className="grid grid-cols-2 gap-2 md:grid-cols-3">
                   {availableMechanics.map(mechanic => (
                     <motion.button
                       key={mechanic}
                       type="button"
                       onClick={() => handleMechanicToggle(mechanic)}
-                      className={`p-2 rounded-lg text-sm font-medium transition-colors ${
+                      className={`rounded-2xl border px-3 py-2 text-sm font-medium transition-colors ${
                         modifications.mechanics.includes(mechanic)
-                          ? 'bg-primary text-white'
-                          : 'bg-white/10 text-white/80 hover:bg-white/20'
+                          ? 'border-blue-500/40 bg-blue-500/15 text-white shadow-lg shadow-blue-500/10'
+                          : 'border-slate-800/70 bg-slate-900/50 text-white/80 hover:bg-slate-900/80'
                       }`}
                       whileHover={{ scale: 1.02 }}
                       whileTap={{ scale: 0.98 }}
@@ -222,9 +222,9 @@ const RemixModal: React.FC<RemixModalProps> = ({ isOpen, onClose, originalGame }
               </div>
 
               {/* Preview */}
-              <div className="p-4 bg-white/5 rounded-lg">
-                <h3 className="text-white font-medium mb-2">Remix Preview</h3>
-                <p className="text-white/80 text-sm">
+              <div className="rounded-2xl border border-slate-800/70 bg-slate-900/60 p-4">
+                <h3 className="text-sm font-semibold text-white mb-2">Remix preview</h3>
+                <p className="text-sm text-white/70">
                   {prompt}
                   {modifications.theme && ` in a ${modifications.theme} theme`}
                   {modifications.mechanics.length > 0 && ` with ${modifications.mechanics.join(', ')} mechanics`}

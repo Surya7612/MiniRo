@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Volume2, VolumeX, Settings, Mic, MicOff } from 'lucide-react';
+import { Volume2, VolumeX, Settings, Mic, MicOff, X } from 'lucide-react';
 import { useVoiceStore } from '../stores/voiceStore';
 import { VoiceSettings as VoiceSettingsType } from '../types';
 
-const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+const API_BASE_URL = import.meta.env.VITE_BACKEND_URL || 'http://localhost:5002';
 
 const VoiceSettings: React.FC = () => {
   const {
@@ -70,9 +70,9 @@ const VoiceSettings: React.FC = () => {
       {/* Voice Settings Button */}
       <motion.button
         onClick={() => setIsOpen(!isOpen)}
-        className="fixed top-4 left-4 z-30 glass p-3 rounded-full"
-        whileHover={{ scale: 1.05 }}
-        whileTap={{ scale: 0.95 }}
+        className="fixed bottom-6 right-6 z-40 flex h-12 w-12 items-center justify-center rounded-full bg-gradient-to-br from-blue-500 via-purple-500 to-pink-500 shadow-lg shadow-blue-500/30"
+        whileHover={{ scale: 1.08 }}
+        whileTap={{ scale: 0.94 }}
       >
         <Settings className="w-5 h-5 text-white" />
       </motion.button>
@@ -81,25 +81,38 @@ const VoiceSettings: React.FC = () => {
       <AnimatePresence>
         {isOpen && (
           <motion.div
-            initial={{ opacity: 0, x: -300 }}
-            animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: -300 }}
-            className="fixed top-4 left-20 z-30 glass p-6 w-80 max-h-96 overflow-y-auto"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: 20 }}
+            className="fixed bottom-24 right-6 z-40 w-80 max-h-[70vh] overflow-y-auto rounded-3xl border border-slate-800/60 bg-slate-950/90 p-6 shadow-2xl backdrop-blur-xl"
           >
-            <div className="space-y-4">
-              <h3 className="text-white font-bold text-lg flex items-center gap-2">
-                <Mic className="w-5 h-5" />
-                Voice Settings
-              </h3>
+            <div className="space-y-5">
+              <div className="flex items-center justify-between">
+                <h3 className="flex items-center gap-2 text-lg font-semibold text-white">
+                  <Mic className="w-5 h-5" />
+                  Voice Settings
+                </h3>
+                <motion.button
+                  onClick={() => setIsOpen(false)}
+                  className="rounded-full bg-white/5 p-2 text-white/60 hover:text-white"
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                >
+                  <X className="h-4 w-4" />
+                </motion.button>
+              </div>
 
               {/* Audio Enable/Disable */}
-              <div className="flex items-center justify-between">
-                <span className="text-white/80">Audio Narration</span>
+              <div className="flex items-center justify-between rounded-2xl border border-slate-800/80 bg-slate-900/60 px-4 py-3">
+                <div>
+                  <p className="text-sm font-medium text-white">Audio narration</p>
+                  <p className="text-xs text-white/50">Toggle the AI commentator during play</p>
+                </div>
                 <motion.button
                   onClick={toggleAudio}
-                  className={`p-2 rounded-lg transition-colors ${
-                    isAudioEnabled 
-                      ? 'bg-green-500/20 text-green-400' 
+                  className={`flex h-9 w-9 items-center justify-center rounded-full transition-colors ${
+                    isAudioEnabled
+                      ? 'bg-green-500/20 text-green-400'
                       : 'bg-red-500/20 text-red-400'
                   }`}
                   whileHover={{ scale: 1.05 }}
@@ -110,11 +123,11 @@ const VoiceSettings: React.FC = () => {
               </div>
 
               {/* Volume Control */}
-              <div className="space-y-2">
+              <div className="space-y-3 rounded-2xl border border-slate-800/80 bg-slate-900/60 px-4 py-4">
                 <div className="flex items-center justify-between">
-                  <span className="text-white/80">Volume</span>
-                  <div className="flex items-center gap-2">
-                    <VolumeX className="w-4 h-4 text-white/60" />
+                  <span className="text-sm font-medium text-white">Narration volume</span>
+                  <div className="flex items-center gap-3 text-white/60">
+                    <VolumeX className="h-4 w-4" />
                     <input
                       type="range"
                       min="0"
@@ -122,19 +135,17 @@ const VoiceSettings: React.FC = () => {
                       step="0.1"
                       value={volume}
                       onChange={(e) => handleVolumeChange(parseFloat(e.target.value))}
-                      className="w-20 h-2 bg-white/20 rounded-lg appearance-none cursor-pointer"
+                      className="h-2 w-24 cursor-pointer appearance-none rounded-full bg-white/20"
                     />
-                    <Volume2 className="w-4 h-4 text-white/60" />
+                    <Volume2 className="h-4 w-4" />
                   </div>
                 </div>
-                <div className="text-xs text-white/60">
-                  {Math.round(volume * 100)}%
-                </div>
+                <div className="text-right text-xs text-white/50">{Math.round(volume * 100)}%</div>
               </div>
 
               {/* Voice Selection */}
-              <div className="space-y-2">
-                <span className="text-white/80 text-sm">Narration Style</span>
+              <div className="space-y-3">
+                <span className="text-sm font-medium text-white">Narration style</span>
                 {isLoading ? (
                   <div className="text-white/60 text-sm">Loading voices...</div>
                 ) : error ? (
@@ -145,17 +156,17 @@ const VoiceSettings: React.FC = () => {
                       <motion.button
                         key={voice.id}
                         onClick={() => handleVoiceSelect(voice)}
-                        className={`w-full p-3 rounded-lg text-left transition-colors ${
+                        className={`w-full rounded-2xl border px-4 py-3 text-left transition-colors ${
                           selectedVoice?.id === voice.id
-                            ? 'bg-blue-500/20 border border-blue-400/50'
-                            : 'bg-white/5 hover:bg-white/10 border border-transparent'
+                            ? 'border-blue-500/40 bg-blue-500/10 shadow-lg shadow-blue-500/10'
+                            : 'border-slate-800/70 bg-slate-900/50 hover:bg-slate-900/80'
                         }`}
                         whileHover={{ scale: 1.02 }}
                         whileTap={{ scale: 0.98 }}
                       >
-                        <div className="text-white font-medium text-sm">{voice.name}</div>
-                        <div className="text-white/60 text-xs mt-1">{voice.description}</div>
-                        <div className="text-white/40 text-xs mt-1 capitalize">
+                        <div className="text-sm font-semibold text-white">{voice.name}</div>
+                        <div className="mt-1 text-xs text-white/60">{voice.description}</div>
+                        <div className="mt-1 text-xs uppercase tracking-[0.2em] text-white/40">
                           Style: {voice.style}
                         </div>
                       </motion.button>
@@ -166,9 +177,9 @@ const VoiceSettings: React.FC = () => {
 
               {/* Current Selection */}
               {selectedVoice && (
-                <div className="pt-2 border-t border-white/10">
-                  <div className="text-white/60 text-xs">Selected Voice:</div>
-                  <div className="text-white font-medium text-sm">{selectedVoice.name}</div>
+                <div className="rounded-2xl border border-slate-800/80 bg-slate-900/60 px-4 py-3">
+                  <div className="text-xs uppercase tracking-[0.2em] text-white/40">Selected voice</div>
+                  <div className="text-sm font-semibold text-white">{selectedVoice.name}</div>
                 </div>
               )}
             </div>

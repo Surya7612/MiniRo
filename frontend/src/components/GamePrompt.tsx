@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Sparkles, Gamepad2, Loader2, Mic, Users } from 'lucide-react';
 import { useSocket } from '../hooks/useSocket';
@@ -8,13 +8,21 @@ import { useVoiceStore } from '../stores/voiceStore';
 interface GamePromptProps {
   onShowRoomDiscovery?: () => void;
   onShowViralGames?: () => void;
+  onGameCreated?: () => void;
 }
 
-const GamePrompt: React.FC<GamePromptProps> = ({ onShowRoomDiscovery, onShowViralGames }) => {
+const GamePrompt: React.FC<GamePromptProps> = ({ onShowRoomDiscovery, onShowViralGames, onGameCreated }) => {
   const [prompt, setPrompt] = useState('');
   const { generateGame } = useSocket();
-  const { isGenerating, setGenerating } = useGameStore();
+  const { isGenerating, setGenerating, currentGame } = useGameStore();
   const { selectedVoice, isAudioEnabled } = useVoiceStore();
+
+  // Handle game creation success
+  useEffect(() => {
+    if (currentGame && onGameCreated) {
+      onGameCreated();
+    }
+  }, [currentGame, onGameCreated]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -36,7 +44,7 @@ const GamePrompt: React.FC<GamePromptProps> = ({ onShowRoomDiscovery, onShowVira
     <motion.div
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
-      className="glass p-8 max-w-2xl mx-auto"
+      className="glass p-8 max-w-4xl mx-auto w-full"
     >
       <div className="text-center mb-8">
         <motion.div

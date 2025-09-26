@@ -1,22 +1,155 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" class="dark">
   <head>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Roam Game Super App</title>
+    
+    <!-- SEO Meta Tags -->
+    <title>MiniRo - AI-Powered Gaming Platform | Create, Play & Share Games</title>
+    <meta name="description" content="MiniRo is the revolutionary AI-powered gaming platform where you can create, play, and share amazing 3D games in seconds. Join thousands of developers and gamers in the future of interactive entertainment." />
+    <meta name="keywords" content="AI gaming, game development, 3D games, multiplayer gaming, game creation, artificial intelligence, gaming platform, indie games, game engine" />
+    <meta name="author" content="MiniRo Team" />
+    <meta name="robots" content="index, follow" />
+    
+    <!-- Open Graph Meta Tags -->
+    <meta property="og:title" content="MiniRo - AI-Powered Gaming Platform" />
+    <meta property="og:description" content="Create, play, and share incredible games powered by cutting-edge AI technology. Join the future of gaming!" />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://miniro.games" />
+    <meta property="og:image" content="https://miniro.games/og-image.jpg" />
+    <meta property="og:site_name" content="MiniRo" />
+    
+    <!-- Twitter Card Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="MiniRo - AI-Powered Gaming Platform" />
+    <meta name="twitter:description" content="Create, play, and share incredible games powered by cutting-edge AI technology." />
+    <meta name="twitter:image" content="https://miniro.games/twitter-image.jpg" />
+    
+    <!-- Additional Meta Tags -->
+    <meta name="theme-color" content="#3b82f6" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-title" content="MiniRo" />
+    
+    <!-- Preconnect to external domains for performance -->
+    <link rel="preconnect" href="https://images.unsplash.com" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    
+    <!-- Performance and Accessibility -->
+    <link rel="dns-prefetch" href="//images.unsplash.com" />
+    <link rel="dns-prefetch" href="//fonts.googleapis.com" />
+    
     <style>
-      body {
+      /* Critical CSS for initial render */
+      * {
         margin: 0;
         padding: 0;
-        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        overflow: hidden;
+        box-sizing: border-box;
+      }
+      
+      html {
+        background: #0f172a;
+        color: white;
+        font-family: 'Inter', system-ui, -apple-system, sans-serif;
+        line-height: 1.5;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+      }
+      
+      body {
+        background: #0f172a !important;
+        color: white !important;
+        margin: 0;
+        padding: 0;
+        width: 100%;
+        min-height: 100vh;
+        overflow-x: hidden;
+        font-family: 'Inter', system-ui, -apple-system, sans-serif;
+      }
+      
+      #root {
+        background: #0f172a !important;
+        min-height: 100vh;
+        width: 100%;
+      }
+      
+      /* Loading spinner */
+      .loading-spinner {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 40px;
+        height: 40px;
+        border: 4px solid #334155;
+        border-top: 4px solid #3b82f6;
+        border-radius: 50%;
+        animation: spin 1s linear infinite;
+        z-index: 9999;
+      }
+      
+      @keyframes spin {
+        0% { transform: translate(-50%, -50%) rotate(0deg); }
+        100% { transform: translate(-50%, -50%) rotate(360deg); }
+      }
+      
+      /* Accessibility improvements */
+      @media (prefers-reduced-motion: reduce) {
+        * {
+          animation-duration: 0.01ms !important;
+          animation-iteration-count: 1 !important;
+          transition-duration: 0.01ms !important;
+        }
+      }
+      
+      /* High contrast mode support */
+      @media (prefers-contrast: high) {
+        body {
+          background: #000 !important;
+          color: #fff !important;
+        }
+      }
+      
+      /* Ensure proper layout */
+      .container-center {
+        max-width: 1280px;
+        margin: 0 auto;
+        padding: 0 1rem;
+      }
+      
+      @media (min-width: 640px) {
+        .container-center {
+          padding: 0 1.5rem;
+        }
+      }
+      
+      @media (min-width: 1024px) {
+        .container-center {
+          padding: 0 2rem;
+        }
       }
     </style>
   </head>
   <body>
-    <div id="root"></div>
+    <!-- Loading indicator -->
+    <div id="loading" class="loading-spinner"></div>
+    
+    <!-- Main app container -->
+    <div id="root" role="main" aria-label="MiniRo Gaming Platform"></div>
+    
+    <!-- Scripts -->
     <script type="module" src="/src/main.tsx"></script>
+    
+    <!-- Remove loading spinner when app loads -->
+    <script>
+      window.addEventListener('load', function() {
+        const loading = document.getElementById('loading');
+        if (loading) {
+          loading.style.display = 'none';
+        }
+      });
+    </script>
   </body>
 </html>

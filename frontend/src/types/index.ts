@@ -69,7 +69,7 @@ export interface Player {
 
 export interface GameObject {
   id: string;
-  type: 'cube' | 'sphere' | 'plane' | 'custom';
+  type: 'cube' | 'sphere' | 'plane' | 'custom' | 'collectible';
   position: Vector3;
   rotation: Vector3;
   scale: Vector3;

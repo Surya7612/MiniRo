@@ -27,7 +27,7 @@ const RoomDiscovery: React.FC<RoomDiscoveryProps> = ({ onJoinRoom, onClose }) =>
   const fetchRooms = async () => {
     setLoading(true);
     try {
-      const response = await fetch('http://localhost:5000/api/games');
+      const response = await fetch(`${import.meta.env.VITE_BACKEND_URL || 'http://localhost:5002'}/api/games`);
       const data = await response.json();
       
       if (data.success) {
@@ -84,23 +84,23 @@ const RoomDiscovery: React.FC<RoomDiscoveryProps> = ({ onJoinRoom, onClose }) =>
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      className="absolute inset-0 flex items-center justify-center p-4 bg-black/50"
+      className="modal-overlay"
     >
       <motion.div
-        initial={{ scale: 0.9, opacity: 0 }}
+        initial={{ scale: 0.95, opacity: 0 }}
         animate={{ scale: 1, opacity: 1 }}
-        exit={{ scale: 0.9, opacity: 0 }}
-        className="glass p-6 max-w-4xl w-full max-h-[80vh] overflow-hidden flex flex-col"
+        exit={{ scale: 0.95, opacity: 0 }}
+        className="modal-surface max-w-4xl max-h-[80vh] overflow-hidden flex flex-col"
       >
         <div className="flex items-center justify-between mb-6">
           <h2 className="text-2xl font-bold text-white">Find Games</h2>
           <motion.button
             onClick={onClose}
-            className="text-white/60 hover:text-white text-2xl"
+            className="rounded-full bg-white/5 p-2 text-white/60 hover:text-white"
             whileHover={{ scale: 1.1 }}
             whileTap={{ scale: 0.9 }}
           >
-            ×
+            <span className="text-xl leading-none">×</span>
           </motion.button>
         </div>
 
@@ -162,7 +162,7 @@ const RoomDiscovery: React.FC<RoomDiscoveryProps> = ({ onJoinRoom, onClose }) =>
                   key={room.id}
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
-                  className="p-4 bg-white/5 rounded-lg border border-white/10 hover:border-white/20 transition-colors"
+                  className="rounded-2xl border border-slate-800/70 bg-slate-900/60 p-4 transition-colors hover:border-blue-500/30"
                 >
                   <div className="flex items-start justify-between mb-3">
                     <div>

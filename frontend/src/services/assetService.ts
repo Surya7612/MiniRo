@@ -1,6 +1,6 @@
 import { GameAsset } from '../types';
 
-const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || 'http://localhost:5000';
+const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || 'http://localhost:5002';
 
 export interface AssetGenerationRequest {
   gameId: string;
