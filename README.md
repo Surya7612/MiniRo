@@ -1,4 +1,4 @@
-# 🎮 Roam Game Super App
+# 🎮 MiniRo
 
 **AI-native, mobile-first game engine for instant 3D multiplayer game creation**
 
@@ -6,6 +6,8 @@
 [![License](https://img.shields.io/badge/license-MIT-blue)](LICENSE)
 [![Node.js](https://img.shields.io/badge/node-%3E%3D18.0.0-brightgreen)](https://nodejs.org/)
 [![TypeScript](https://img.shields.io/badge/typescript-5.0+-blue)](https://www.typescriptlang.org/)
+
+<img width="2880" height="1552" alt="image" src="https://github.com/user-attachments/assets/3cbf423e-2237-49d5-9a3e-77eb0c7017be" />
 
 ## ✨ Features
 
